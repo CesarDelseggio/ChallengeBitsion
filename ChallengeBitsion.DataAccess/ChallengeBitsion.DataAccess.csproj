@@ -24,8 +24,4 @@
     <ProjectReference Include="..\ChallengeBitsion.Common\ChallengeBitsion.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 </Project>
