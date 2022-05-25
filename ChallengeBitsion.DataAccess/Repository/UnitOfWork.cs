@@ -26,5 +26,28 @@ namespace ChallengeBitsion.DataAccess.Repository
             }
         }
 
+        private IRepository<Gender> _genderRepository;
+        public IRepository<Gender> GenderRepository
+        {
+            get
+            {
+                if (_genderRepository == null)
+                    _genderRepository = new Repository<Gender>(_context);
+
+                return _genderRepository;
+            }
+        }
+
+        private IRepository<Client> _clientRepository;
+        public IRepository<Client> ClientRepository
+        {
+            get
+            {
+                if (_clientRepository == null)
+                    _clientRepository = new Repository<Client>(_context);
+
+                return _clientRepository;
+            }
+        }
     }
 }
