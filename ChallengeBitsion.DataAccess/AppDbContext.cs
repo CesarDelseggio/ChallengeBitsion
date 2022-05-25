@@ -14,6 +14,8 @@ namespace ChallengeBitsion.DataAccess
         }
 
         public DbSet<Log> Logs { get; set; }
+        public DbSet<Gender> Genders { get; set; }
+        public DbSet<Client> Clients { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
