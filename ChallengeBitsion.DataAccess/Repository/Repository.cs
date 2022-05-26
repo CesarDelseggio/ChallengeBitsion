@@ -22,46 +22,45 @@ namespace ChallengeBitsion.DataAccess.Repository
 
         public async Task<T> Get(int id)
         {
-            return await _context.Set<T>().AsNoTracking()
+            return await _context.Set<T>()
                 .FirstOrDefaultAsync(x=>x.Id==id);
         }
 
         public IQueryable<T> GetAll()
         {
-            return _context.Set<T>().AsNoTracking().AsQueryable();
+            return _context.Set<T>().AsQueryable();
         }
 
         public IQueryable<T> GetAll(ISpecification<T> spec)
         {
-            return ApplySpecification(spec, _context.Set<T>().AsNoTracking().AsQueryable());
+            return ApplySpecification(spec, _context.Set<T>().AsQueryable());
         }
 
         public async Task<int> Count()
         {
-            return await _context.Set<T>().AsNoTracking().CountAsync();
+            return await _context.Set<T>().CountAsync();
         }
 
         public async Task<int> Count(ISpecification<T> spec)
         {
-            return await _context.Set<T>().AsNoTracking().CountAsync(spec.Criteria);
+            return await _context.Set<T>().CountAsync(spec.Criteria);
         }
 
-        public void Insert(T entity)
+        public async Task Insert(T entity)
         {
             _context.Set<T>().Add(entity);
         }
 
-        public void Update(T entity)
+        public async Task Update(T entity)
         {
             _context.Set<T>().Update(entity);
         }
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
             var entity = _context.Set<T>().Find(id);
             _context.Set<T>().Remove(entity);
         }
-
-        public void DeleteAll()
+        public async Task DeleteAll()
         {
             var query = _context.Set<T>().AsQueryable();
             _context.Set<T>().RemoveRange(query);

@@ -72,7 +72,6 @@ namespace ChallengeBitsion.Business.Services
 
             _repository.Update(entityModel);
             await _unitOfWork.SaveAsync();
-
         }
 
         public async void Delete(int id)
