@@ -7,5 +7,6 @@ namespace ChallengeBitsion.Business.Models.Genders
 {
     public class GenderDetailDTO : EntityBase
     {
+        public string Name { get; set; }
     }
 }

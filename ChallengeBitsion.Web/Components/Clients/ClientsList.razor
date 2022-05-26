@@ -1,0 +1,45 @@
+﻿@using ChallengeBitsion.Business.Models.Clients
+@using ChallengeBitsion.Business.Specifications.Clients
+@inject ChallengeBitsion.Business.Interfaces.IClientService Service
+
+<h3>Listado de Clientes</h3>
+
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Identification</th>
+                <th>Edad</th>
+                <th>Genero</th>
+                <th>Activo</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in logs)
+            {
+                <tr>
+                    <td>@item.FullName</td>
+                    <td>@item.Identification</td>
+                    <td>@item.Age</td>
+                    <td>@item.Gender.Name</td>
+                    <td>@item.Status</td>
+                    <td><button>Ver</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    private List<ClientDTO> logs = new List<ClientDTO>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitializedAsync();
+        var spec = new ClientsWithGenderPagedSpec(1,10);
+        
+        logs = await Service.GetAll(spec);
+   }
+}
