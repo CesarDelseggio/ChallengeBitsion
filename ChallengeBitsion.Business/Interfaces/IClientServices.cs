@@ -13,7 +13,7 @@ namespace ChallengeBitsion.Business.Interfaces
 {
     public interface IClientService
     {
-        Task<ClientDetailDTO> Get(int id);
+        Task<ClientEditDTO> Get(int id);
         Task<List<ClientDTO>> GetAll();
         Task<List<ClientDTO>> GetAll(ISpecification<Client> spec);
         Task<int> Count();

@@ -13,7 +13,7 @@ namespace ChallengeBitsion.Business.Interfaces
 {
     public interface IGenderService
     {
-        Task<GenderDetailDTO> Get(int id);
+        Task<GenderEditDTO> Get(int id);
         Task<List<GenderDTO>> GetAll();
         Task<List<GenderDTO>> GetAll(ISpecification<Gender> spec);
         Task<int> Count();

@@ -1,11 +1,17 @@
 ﻿@using ChallengeBitsion.Business.Models.Clients
 @using ChallengeBitsion.Business.Specifications.Clients
 @inject ChallengeBitsion.Business.Interfaces.IClientService Service
+@inject NavigationManager navManager
 
 <h3>Listado de Clientes</h3>
 
-<div>
-    <table>
+<div class="row">
+    <div class="col-12 text-right mb-2">
+        <a class="btn btn-primary" href="/clients/create">Nuevo</a>
+    </div>
+</div>
+<div class="row">
+    <table class="table table-bordered">
         <thead>
             <tr>
                 <th>Nombre</th>
@@ -13,6 +19,7 @@
                 <th>Edad</th>
                 <th>Genero</th>
                 <th>Activo</th>
+                <th>Acción</th>
             </tr>
         </thead>
 
@@ -23,13 +30,23 @@
                     <td>@item.FullName</td>
                     <td>@item.Identification</td>
                     <td>@item.Age</td>
-                    <td>@item.Gender.Name</td>
+                    @*<td>@item.Gender.Name</td>*@
                     <td>@item.Status</td>
-                    <td><button>Ver</button></td>
+                    <td>
+                        <a href="/clients/edit/@item.Id">Editar</a>
+                        <a href="/clients/delete/@item.Id">Borrar</a>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
+</div>
+
+<div class="row">
+    <div class="col-12 text-center">
+        <button class="btn btn-secondary">Anterior</button>
+        <button class="btn btn-secondary">Siguiente</button>
+    </div>
 </div>
 
 @code {
@@ -39,7 +56,8 @@
     {
         base.OnInitializedAsync();
         var spec = new ClientsWithGenderPagedSpec(1,10);
-        
+
         logs = await Service.GetAll(spec);
-   }
+    }
+
 }

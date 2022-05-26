@@ -35,11 +35,11 @@ namespace ChallengeBitsion.Business.Services
             return await _repository.Count(spec);
         }
 
-        public async Task<ClientDetailDTO> Get(int id)
+        public async Task<ClientEditDTO> Get(int id)
         {
             var result = await _repository.Get(id);
 
-            return AutoMapper.Mapper.Map<ClientDetailDTO>(result);
+            return AutoMapper.Mapper.Map<ClientEditDTO>(result);
         }
 
         public async Task<List<ClientDTO>> GetAll()

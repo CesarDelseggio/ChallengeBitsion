@@ -13,7 +13,7 @@ namespace ChallengeBitsion.Business.Interfaces
 {
     public interface ILogService
     {
-        Task<LogDetailDTO> Get(int id);
+        Task<LogEditDTO> Get(int id);
         Task<List<LogDTO>> GetAll();
         Task<List<LogDTO>> GetAll(ISpecification<Log> spec);
         Task<int> Count();

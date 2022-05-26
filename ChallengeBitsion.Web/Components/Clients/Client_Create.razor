@@ -1,0 +1,48 @@
+﻿@using ChallengeBitsion.Business.Models.Clients
+@inject ChallengeBitsion.Business.Interfaces.IClientService services
+@inject NavigationManager navManager
+
+<h3>Nuevo Cliente</h3>
+
+<EditForm Model="client">
+    <div class="form-group">
+        <label>Nombre Completo</label>
+        <InputText 
+            @bind-Value="client.FullName" 
+            class="form-control">
+        </InputText>
+    </div>
+    <div class="form-group">
+        <label>Identificación</label>
+        <InputText 
+            @bind-Value="client.Identification"
+            class="form-control">
+        </InputText>
+    </div>
+    <div class="form-group">
+        <button @onclick="Save" class="btn btn-primary">Guardar</button>
+        <button @onclick="Cancel" class="btn btn-primary">Cancelar</button>
+    </div>
+</EditForm>
+
+@code {
+    ClientEditDTO client = new ClientEditDTO();
+
+    protected void Save()
+    {
+        try
+        {
+            services.Insert(client);
+        }
+        catch (Exception ex)
+        {
+            
+        }
+
+    }
+
+    protected void Cancel()
+    {
+        navManager.NavigateTo("clients");
+    }
+}

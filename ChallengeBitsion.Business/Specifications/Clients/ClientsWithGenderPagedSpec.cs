@@ -13,6 +13,7 @@ namespace ChallengeBitsion.Business.Specifications.Clients
     {
         public ClientsWithGenderPagedSpec(int page, int pageCount)
         {
+            AddIncludes(x => x.Gender);
             SetPagination(page, pageCount);
         }
     }

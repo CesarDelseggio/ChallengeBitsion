@@ -1,0 +1,34 @@
+﻿@using ChallengeBitsion.Business.Models.Clients
+@inject ChallengeBitsion.Business.Interfaces.IClientService services
+
+<h3>Editar Cliente</h3>
+@if(Client == null){
+    <div>
+        <h4>No se encontró el cliente</h4>
+        <a href="/clients">Atras</a>
+    </div>
+}
+else
+{
+    <div>
+        <label>@Client.FullName</label>
+    </div>    
+}
+
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    int IdInt;
+
+    public ClientEditDTO Client { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        IdInt = int.Parse(Id);
+        Client = await services.Get(IdInt);
+    }
+}
