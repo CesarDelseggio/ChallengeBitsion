@@ -18,6 +18,8 @@ namespace ChallengeBitsion.Business
             services.AddDataAccessServices(configuration);
 
             services.AddScoped<ILogService, LogService>();
+            services.AddScoped<IGenderService, GenderService>();
+            services.AddScoped<IClientService, ClientService>();
 
             //configura automapper with data of MappingProfile
             Mapper.Initialize(cfg => cfg.AddProfile<MappingProfile>());

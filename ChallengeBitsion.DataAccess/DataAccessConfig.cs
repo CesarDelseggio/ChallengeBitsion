@@ -24,6 +24,8 @@ namespace ChallengeBitsion.Business
 
             services.AddScoped<UnitOfWork, UnitOfWork>();
             services.AddScoped<IRepository<Log>, Repository<Log>>();
+            services.AddScoped<IRepository<Gender>, Repository<Gender>>();
+            services.AddScoped<IRepository<Client>, Repository<Client>>();
         }
     }
 }
