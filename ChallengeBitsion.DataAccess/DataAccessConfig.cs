@@ -22,10 +22,10 @@ namespace ChallengeBitsion.Business
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<AppDbContext>();
 
-            services.AddScoped<UnitOfWork, UnitOfWork>();
-            services.AddScoped<IRepository<Log>, Repository<Log>>();
-            services.AddScoped<IRepository<Gender>, Repository<Gender>>();
-            services.AddScoped<IRepository<Client>, Repository<Client>>();
+            services.AddTransient<UnitOfWork, UnitOfWork>();
+            services.AddTransient<IRepository<Log>, Repository<Log>>();
+            services.AddTransient<IRepository<Gender>, Repository<Gender>>();
+            services.AddTransient<IRepository<Client>, Repository<Client>>();
         }
     }
 }

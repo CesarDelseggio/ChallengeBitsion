@@ -12,7 +12,7 @@ namespace ChallengeBitsion.Business.Models.Clients
         public string FullName { get; set; }
         public string Identification { get; set; }
         public int Age { get; set; }
-        public int Genre_Id { get; set; }
+        public int Gender_Id { get; set; }
         public GenderDTO Gender { get; set; }
         public bool Status { get; set; }
     }

@@ -22,27 +22,28 @@ namespace ChallengeBitsion.DataAccess.Repository
 
         public async Task<T> Get(int id)
         {
-            return await _context.Set<T>().FindAsync(id);
+            return await _context.Set<T>().AsNoTracking()
+                .FirstOrDefaultAsync(x=>x.Id==id);
         }
 
         public IQueryable<T> GetAll()
         {
-            return _context.Set<T>().AsQueryable();
+            return _context.Set<T>().AsNoTracking().AsQueryable();
         }
 
         public IQueryable<T> GetAll(ISpecification<T> spec)
         {
-            return ApplySpecification(spec, _context.Set<T>().AsQueryable());
+            return ApplySpecification(spec, _context.Set<T>().AsNoTracking().AsQueryable());
         }
 
         public async Task<int> Count()
         {
-            return await _context.Set<T>().CountAsync();
+            return await _context.Set<T>().AsNoTracking().CountAsync();
         }
 
         public async Task<int> Count(ISpecification<T> spec)
         {
-            return await _context.Set<T>().CountAsync(spec.Criteria);
+            return await _context.Set<T>().AsNoTracking().CountAsync(spec.Criteria);
         }
 
         public void Insert(T entity)
@@ -74,16 +75,18 @@ namespace ChallengeBitsion.DataAccess.Repository
 
             foreach (var item in spec.Includes)
             {
-                query.Include(item);
+                query = query.Include(item);
             }
 
             foreach (var item in spec.IncludeNames)
             {
-                query.Include(item);
+                query = query.Include(item);
             }
 
-            return query.Skip(spec.Skip)
+            query = query.Skip(spec.Skip)
                 .Take(spec.Take);
+
+            return query;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace ChallengeBitsion.DataAccess.Data.Models
         public int Age { get; set; }
 
         [ForeignKey(nameof(Gender))]
-        public int Genre_Id { get; set; }
+        public int Gender_Id { get; set; }
         public Gender Gender { get; set; }
         [Required]
         public bool Status { get; set; }

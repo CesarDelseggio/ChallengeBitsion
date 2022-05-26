@@ -3,6 +3,7 @@ using ChallengeBitsion.DataAccess.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ChallengeBitsion.DataAccess.Repository
 {
@@ -13,6 +14,11 @@ namespace ChallengeBitsion.DataAccess.Repository
         public UnitOfWork(AppDbContext contex)
         {
             _context = contex;
+        }
+
+        public async Task SaveAsync()
+        {
+            await _context.SaveChangesAsync();
         }
 
         private IRepository<Log> _logRepository;

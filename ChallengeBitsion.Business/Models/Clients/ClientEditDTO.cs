@@ -18,7 +18,10 @@ namespace ChallengeBitsion.Business.Models.Clients
         [Required]
         [Range(0, 200)]
         public int Age { get; set; }
-        public int Genre_Id { get; set; }
+
+        [Required]
+        [Range(1,200, ErrorMessage = "Debe seleccionar un género")]
+        public int Gender_Id { get; set; }
         public GenderDTO Gender { get; set; }
         [Required]
         public bool Status { get; set; }

@@ -17,9 +17,9 @@ namespace ChallengeBitsion.Business
         {
             services.AddDataAccessServices(configuration);
 
-            services.AddScoped<ILogService, LogService>();
-            services.AddScoped<IGenderService, GenderService>();
-            services.AddScoped<IClientService, ClientService>();
+            services.AddTransient<ILogService, LogService>();
+            services.AddTransient<IGenderService, GenderService>();
+            services.AddTransient<IClientService, ClientService>();
 
             //configura automapper with data of MappingProfile
             Mapper.Initialize(cfg => cfg.AddProfile<MappingProfile>());

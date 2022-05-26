@@ -56,28 +56,35 @@ namespace ChallengeBitsion.Business.Services
             return AutoMapper.Mapper.Map<List<ClientDTO>>(result);
         }
 
-        public void Insert(ClientEditDTO entity)
+        public async void Insert(ClientEditDTO entity)
         {
             var entityModel = AutoMapper.Mapper.Map<Client>(entity);
-            
+            entityModel.Gender = null;
+
             _repository.Insert(entityModel);
+            await _unitOfWork.SaveAsync();
         }
 
-        public void Update(ClientEditDTO entity)
+        public async void Update(ClientEditDTO entity)
         {
             var entityModel = AutoMapper.Mapper.Map<Client>(entity);
+            entityModel.Gender = null;
 
             _repository.Update(entityModel);
+            await _unitOfWork.SaveAsync();
+
         }
 
-        public void Delete(int id)
+        public async void Delete(int id)
         {
             _repository.Delete(id);
+            await _unitOfWork.SaveAsync();
         }
 
-        public void DeleteAll()
+        public async void DeleteAll()
         {
             _repository.DeleteAll();
+            await _unitOfWork.SaveAsync();
         }
     }
 }
