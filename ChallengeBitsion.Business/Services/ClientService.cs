@@ -1,5 +1,5 @@
 ﻿using ChallengeBitsion.Business.Interfaces;
-using ChallengeBitsion.Business.Models.Logs;
+using ChallengeBitsion.Business.Models.Clients;
 using ChallengeBitsion.Common.Interfaces;
 using ChallengeBitsion.Common.Models;
 using ChallengeBitsion.Common.Specification;
@@ -15,14 +15,14 @@ using System.Threading.Tasks;
 
 namespace ChallengeBitsion.Business.Services
 {
-    public class LogService : ILogService
+    public class ClientService : IClientService
     {
         private readonly UnitOfWork _unitOfWork;
-        private readonly IRepository<Log> _repository;
-        public LogService(UnitOfWork unitOfWork)
+        private readonly IRepository<Client> _repository;
+        public ClientService(UnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _repository = unitOfWork.LogRepository;
+            _repository = unitOfWork.ClientRepository;
         }
 
         public async Task<int> Count()
@@ -30,43 +30,45 @@ namespace ChallengeBitsion.Business.Services
             return await _repository.Count();
         }
 
-        public async Task<int> Count(ISpecification<Log> spec)
+        public async Task<int> Count(ISpecification<Client> spec)
         {
             return await _repository.Count(spec);
         }
 
-        public async Task<LogEditDTO> Get(int id)
+        public async Task<ClientEditDTO> Get(int id)
         {
             var result = await _repository.Get(id);
 
-            return AutoMapper.Mapper.Map<LogEditDTO>(result);
+            return AutoMapper.Mapper.Map<ClientEditDTO>(result);
         }
 
-        public async Task<List<LogDTO>> GetAll()
+        public async Task<List<ClientDTO>> GetAll()
         {
             var result = await _repository.GetAll().ToListAsync();
 
-            return AutoMapper.Mapper.Map<List<LogDTO>>(result);
+            return AutoMapper.Mapper.Map<List<ClientDTO>>(result);
         }
 
-        public async Task<List<LogDTO>> GetAll(ISpecification<Log> spec)
+        public async Task<List<ClientDTO>> GetAll(ISpecification<Client> spec)
         {
             var result = await _repository.GetAll(spec).ToListAsync();
 
-            return AutoMapper.Mapper.Map<List<LogDTO>>(result);
+            return AutoMapper.Mapper.Map<List<ClientDTO>>(result);
         }
 
-        public async Task Insert(LogEditDTO entity)
+        public async Task Insert(ClientEditDTO entity)
         {
-            var entityModel = AutoMapper.Mapper.Map<Log>(entity);
-            
+            var entityModel = AutoMapper.Mapper.Map<Client>(entity);
+            entityModel.Gender = null;
+
             await _repository.Insert(entityModel);
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task Update(LogEditDTO entity)
+        public async Task Update(ClientEditDTO entity)
         {
-            var entityModel = AutoMapper.Mapper.Map<Log>(entity);
+            var entityModel = AutoMapper.Mapper.Map<Client>(entity);
+            entityModel.Gender = null;
 
             await _repository.Update(entityModel);
             await _unitOfWork.SaveAsync();

@@ -17,13 +17,16 @@ namespace ChallengeBitsion.Business
         public static void AddDataAccessServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<AppDbContext>(options => 
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionStrings")));
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                .UseSqlServer(configuration.GetConnectionString("DefaultConnectionStrings")));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<AppDbContext>();
 
-            services.AddScoped<UnitOfWork, UnitOfWork>();
-            services.AddScoped<IRepository<Log>, Repository<Log>>();
+            services.AddTransient<UnitOfWork, UnitOfWork>();
+            services.AddTransient<IRepository<Log>, Repository<Log>>();
+            services.AddTransient<IRepository<Gender>, Repository<Gender>>();
+            services.AddTransient<IRepository<Client>, Repository<Client>>();
         }
     }
 }

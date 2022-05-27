@@ -22,7 +22,8 @@ namespace ChallengeBitsion.DataAccess.Repository
 
         public async Task<T> Get(int id)
         {
-            return await _context.Set<T>().FindAsync(id);
+            return await _context.Set<T>()
+                .FirstOrDefaultAsync(x=>x.Id==id);
         }
 
         public IQueryable<T> GetAll()
@@ -42,25 +43,31 @@ namespace ChallengeBitsion.DataAccess.Repository
 
         public async Task<int> Count(ISpecification<T> spec)
         {
-            return await _context.Set<T>().CountAsync(spec.Criteria);
+            if (spec != null && spec.Criteria != null)
+            {
+                return await _context.Set<T>().CountAsync(spec.Criteria);
+            }
+            else
+            {
+                return await _context.Set<T>().CountAsync();
+            }
         }
 
-        public void Insert(T entity)
+        public async Task Insert(T entity)
         {
             _context.Set<T>().Add(entity);
         }
 
-        public void Update(T entity)
+        public async Task Update(T entity)
         {
             _context.Set<T>().Update(entity);
         }
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
             var entity = _context.Set<T>().Find(id);
             _context.Set<T>().Remove(entity);
         }
-
-        public void DeleteAll()
+        public async Task DeleteAll()
         {
             var query = _context.Set<T>().AsQueryable();
             _context.Set<T>().RemoveRange(query);
@@ -74,16 +81,18 @@ namespace ChallengeBitsion.DataAccess.Repository
 
             foreach (var item in spec.Includes)
             {
-                query.Include(item);
+                query = query.Include(item);
             }
 
             foreach (var item in spec.IncludeNames)
             {
-                query.Include(item);
+                query = query.Include(item);
             }
 
-            return query.Skip(spec.Skip)
+            query = query.Skip(spec.Skip)
                 .Take(spec.Take);
+
+            return query;
         }
     }
 }

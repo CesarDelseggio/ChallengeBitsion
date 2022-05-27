@@ -1,5 +1,5 @@
 ﻿using ChallengeBitsion.Business.Models;
-using ChallengeBitsion.Business.Models.Logs;
+using ChallengeBitsion.Business.Models.Genders;
 using ChallengeBitsion.Common.Interfaces;
 using ChallengeBitsion.Common.Models;
 using ChallengeBitsion.DataAccess.Data.Models;
@@ -11,16 +11,16 @@ using System.Threading.Tasks;
 
 namespace ChallengeBitsion.Business.Interfaces
 {
-    public interface ILogService
+    public interface IGenderService
     {
-        Task<LogEditDTO> Get(int id);
-        Task<List<LogDTO>> GetAll();
-        Task<List<LogDTO>> GetAll(ISpecification<Log> spec);
+        Task<GenderEditDTO> Get(int id);
+        Task<List<GenderDTO>> GetAll();
+        Task<List<GenderDTO>> GetAll(ISpecification<Gender> spec);
         Task<int> Count();
-        Task<int> Count(ISpecification<Log> spec);
+        Task<int> Count(ISpecification<Gender> spec);
 
-        Task Insert(LogEditDTO entity);
-        Task Update(LogEditDTO entity);
+        Task Insert(GenderEditDTO entity);
+        Task Update(GenderEditDTO entity);
         Task Delete(int id);
     }
 }

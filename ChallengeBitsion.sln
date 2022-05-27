@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChallengeBitsion.DataAccess
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChallengeBitsion.Common", "ChallengeBitsion.Common\ChallengeBitsion.Common.csproj", "{363C78C8-C4B3-4474-9AB3-329712F4D9CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChallengeBitsion.Web", "ChallengeBitsion.Web\ChallengeBitsion.Web.csproj", "{FEAB890A-D1E5-46B1-A015-A411AAAF5EE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChallengeBitsion.Web", "ChallengeBitsion.Web\ChallengeBitsion.Web.csproj", "{FEAB890A-D1E5-46B1-A015-A411AAAF5EE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

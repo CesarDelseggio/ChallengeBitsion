@@ -1,5 +1,5 @@
 ﻿using ChallengeBitsion.Business.Interfaces;
-using ChallengeBitsion.Business.Models.Logs;
+using ChallengeBitsion.Business.Models.Genders;
 using ChallengeBitsion.Common.Interfaces;
 using ChallengeBitsion.Common.Models;
 using ChallengeBitsion.Common.Specification;
@@ -15,14 +15,14 @@ using System.Threading.Tasks;
 
 namespace ChallengeBitsion.Business.Services
 {
-    public class LogService : ILogService
+    public class GenderService : IGenderService
     {
         private readonly UnitOfWork _unitOfWork;
-        private readonly IRepository<Log> _repository;
-        public LogService(UnitOfWork unitOfWork)
+        private readonly IRepository<Gender> _repository;
+        public GenderService(UnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _repository = unitOfWork.LogRepository;
+            _repository = unitOfWork.GenderRepository;
         }
 
         public async Task<int> Count()
@@ -30,43 +30,43 @@ namespace ChallengeBitsion.Business.Services
             return await _repository.Count();
         }
 
-        public async Task<int> Count(ISpecification<Log> spec)
+        public async Task<int> Count(ISpecification<Gender> spec)
         {
             return await _repository.Count(spec);
         }
 
-        public async Task<LogEditDTO> Get(int id)
+        public async Task<GenderEditDTO> Get(int id)
         {
             var result = await _repository.Get(id);
 
-            return AutoMapper.Mapper.Map<LogEditDTO>(result);
+            return AutoMapper.Mapper.Map<GenderEditDTO>(result);
         }
 
-        public async Task<List<LogDTO>> GetAll()
+        public async Task<List<GenderDTO>> GetAll()
         {
             var result = await _repository.GetAll().ToListAsync();
 
-            return AutoMapper.Mapper.Map<List<LogDTO>>(result);
+            return AutoMapper.Mapper.Map<List<GenderDTO>>(result);
         }
 
-        public async Task<List<LogDTO>> GetAll(ISpecification<Log> spec)
+        public async Task<List<GenderDTO>> GetAll(ISpecification<Gender> spec)
         {
             var result = await _repository.GetAll(spec).ToListAsync();
 
-            return AutoMapper.Mapper.Map<List<LogDTO>>(result);
+            return AutoMapper.Mapper.Map<List<GenderDTO>>(result);
         }
 
-        public async Task Insert(LogEditDTO entity)
+        public async Task Insert(GenderEditDTO entity)
         {
-            var entityModel = AutoMapper.Mapper.Map<Log>(entity);
+            var entityModel = AutoMapper.Mapper.Map<Gender>(entity);
             
             await _repository.Insert(entityModel);
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task Update(LogEditDTO entity)
+        public async Task Update(GenderEditDTO entity)
         {
-            var entityModel = AutoMapper.Mapper.Map<Log>(entity);
+            var entityModel = AutoMapper.Mapper.Map<Gender>(entity);
 
             await _repository.Update(entityModel);
             await _unitOfWork.SaveAsync();

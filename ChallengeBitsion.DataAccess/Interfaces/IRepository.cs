@@ -17,9 +17,9 @@ namespace ChallengeBitsion.DataAccess.Interfaces
         Task<int> Count();
         Task<int> Count(ISpecification<T> spec);
 
-        void Insert(T entity);
-        void Update(T entity);
-        void Delete(int id);
-        void DeleteAll();
+        Task Insert(T entity);
+        Task Update(T entity);
+        Task Delete(int id);
+        Task DeleteAll();
     }
 }

@@ -1,28 +1,27 @@
-﻿using ChallengeBitsion.Common.Models;
+﻿using ChallengeBitsion.Business.Models.Genders;
+using ChallengeBitsion.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace ChallengeBitsion.DataAccess.Data.Models
+namespace ChallengeBitsion.Business.Models.Clients
 {
-    [Table("Clients")]
-    public class Client : EntityBase
+    public class ClientEditDTO : EntityBase
     {
         [Required]
         public string FullName { get; set; }
-        
+
         [Required]
         public string Identification { get; set; }
-        
-        [Required]
-        [Range(0,200)]
+
+        [Range(1, 200)]
         public int Age { get; set; }
 
-        [ForeignKey(nameof(Gender))]
+        [Required]
+        [Range(1,200, ErrorMessage = "Debe seleccionar un género")]
         public int Gender_Id { get; set; }
-        public Gender Gender { get; set; }
+        public GenderDTO Gender { get; set; }
         [Required]
         public bool Status { get; set; }
         public bool Drive { get; set; }
@@ -30,6 +29,5 @@ namespace ChallengeBitsion.DataAccess.Data.Models
         public bool Diabetic { get; set; }
         [StringLength(300)]
         public string OtherDiseases { get; set; }
-
     }
 }

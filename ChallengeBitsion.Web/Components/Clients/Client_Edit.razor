@@ -1,0 +1,146 @@
+﻿@using ChallengeBitsion.Business.Models.Clients
+@using ChallengeBitsion.Business.Models.Genders
+@using ChallengeBitsion.Web.Pages
+
+@inject ChallengeBitsion.Business.Interfaces.IClientService services
+@inject ChallengeBitsion.Business.Interfaces.IGenderService servicesGender
+@inject NavigationManager navManager
+
+<h3>Editar Cliente</h3>
+
+@if(client != null)
+{
+<EditForm Model="client" OnValidSubmit="@Save">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>Nombre Completo</label>
+        <InputText 
+            @bind-Value="client.FullName" 
+            class="form-control">
+        </InputText>
+        <ValidationMessage For="() => client.FullName" />
+    </div>
+    <div class="form-group">
+        <label>Identificación</label>
+        <InputText 
+            @bind-Value="client.Identification"
+            class="form-control">
+        </InputText>
+        <ValidationMessage For="() => client.Identification" />
+    </div>
+    <div class="form-group">
+        <label>Edad</label>
+        <InputNumber 
+            @bind-Value="client.Age"
+            class="form-control">
+        </InputNumber>
+        <ValidationMessage For="() => client.Age" />
+    </div>
+    
+    <div class="form-group">
+        <label>Genero</label>
+        <CustomInputSelect @bind-Value="client.Gender_Id" class="form-control">
+            <option value=''>Selecciar Genero</option>
+
+            @foreach (var item in genders)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </CustomInputSelect>
+        <ValidationMessage For="() => client.Gender_Id" />
+    </div>
+
+    <div class="form-group">
+        <div>
+            <InputCheckbox
+                @bind-Value="client.Status">
+            </InputCheckbox>
+            <label>Activo</label>
+            <ValidationMessage For="() => client.Status" />
+        </div>
+
+        <div>
+            <InputCheckbox
+                @bind-Value="client.Drive">
+            </InputCheckbox>
+            <label>Maneja</label>
+            <ValidationMessage For="() => client.Drive" />
+        </div>
+
+        <div>
+            <InputCheckbox
+                @bind-Value="client.Glasses">
+            </InputCheckbox>
+            <label>Usa Lentes</label>
+            <ValidationMessage For="() => client.Glasses" />
+        </div>
+
+        <div>
+            <InputCheckbox
+                @bind-Value="client.Diabetic">
+            </InputCheckbox>
+            <label>Diabetico</label>
+            <ValidationMessage For="() => client.Diabetic" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-form-label">¿Padece alguna otra enfermedad? ¿Cuál?</label>
+        <InputTextArea @bind-Value="client.OtherDiseases" class="form-control">
+        </InputTextArea>
+        <ValidationMessage For="() => client.OtherDiseases" />
+    </div>
+    
+    <div class="text-danger" hidden="@String.IsNullOrWhiteSpace(ErrorMessaje)">
+        <label>@ErrorMessaje</label>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button @onclick="Cancel" class="btn btn-primary">Cancelar</button>
+    </div>
+</EditForm>
+}else
+{
+    <h4 class="alert-warning">No se encontro el cliente</h4>
+    <button @onclick="Cancel" class="btn btn-primary">Atras</button>
+}
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    int IdInt;
+
+    ClientEditDTO client = new ClientEditDTO();
+    List<GenderDTO> genders = new List<GenderDTO>();
+    string ErrorMessaje = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        IdInt = int.Parse(Id);
+
+        genders = await servicesGender.GetAll();
+        client = await services.Get(IdInt);
+    }
+
+    protected async Task Save()
+    {
+        try
+        {
+            await services.Update(client);
+            navManager.NavigateTo("clients");
+        }
+        catch (Exception ex)
+        {
+            ErrorMessaje = "Ocurrió un error inesperado, reintente mas tarde.";
+        }
+
+    }
+
+    protected void Cancel()
+    {
+        navManager.NavigateTo("clients");
+    }
+}

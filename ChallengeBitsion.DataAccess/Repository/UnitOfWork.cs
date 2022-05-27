@@ -1,8 +1,11 @@
 ﻿using ChallengeBitsion.DataAccess.Data.Models;
 using ChallengeBitsion.DataAccess.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ChallengeBitsion.DataAccess.Repository
 {
@@ -13,6 +16,27 @@ namespace ChallengeBitsion.DataAccess.Repository
         public UnitOfWork(AppDbContext contex)
         {
             _context = contex;
+        }
+
+        public async Task SaveAsync()
+        {
+            await _context.SaveChangesAsync();
+            NotTraking();
+        }
+
+        private void NotTraking()
+        {
+            var entries = _context.ChangeTracker.Entries()
+                .Where(e => e.State != EntityState.Detached)
+                .ToList();
+
+            foreach (var entry in entries)
+            {
+                if (entry.Entity != null)
+                {
+                    entry.State = EntityState.Detached;
+                }
+            }
         }
 
         private IRepository<Log> _logRepository;
