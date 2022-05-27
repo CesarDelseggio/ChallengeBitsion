@@ -43,7 +43,14 @@ namespace ChallengeBitsion.DataAccess.Repository
 
         public async Task<int> Count(ISpecification<T> spec)
         {
-            return await _context.Set<T>().CountAsync(spec.Criteria);
+            if (spec != null && spec.Criteria != null)
+            {
+                return await _context.Set<T>().CountAsync(spec.Criteria);
+            }
+            else
+            {
+                return await _context.Set<T>().CountAsync();
+            }
         }
 
         public async Task Insert(T entity)

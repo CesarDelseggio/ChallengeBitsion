@@ -24,7 +24,7 @@
         </thead>
 
         <tbody>
-            @foreach (var item in logs)
+            @foreach (var item in clients)
             {
                 <tr>
                     <td>@item.FullName</td>
@@ -44,20 +44,48 @@
 
 <div class="row">
     <div class="col-12 text-center">
-        <button class="btn btn-secondary">Anterior</button>
-        <button class="btn btn-secondary">Siguiente</button>
+        <button class="btn btn-secondary" @onclick="PreviusPage">Anterior</button>
+        <label>@(page) / @(pageTotal)</label>
+        <button class="btn btn-secondary" @onclick="NextPage">Siguiente</button>
     </div>
 </div>
 
 @code {
-    private List<ClientDTO> logs = new List<ClientDTO>();
+    private List<ClientDTO> clients = new List<ClientDTO>();
+    private int page = 1;
+    private int pageCount = 3;
+    private int pageTotal = 1;
 
     protected override async Task OnInitializedAsync()
     {
         base.OnInitializedAsync();
-        var spec = new ClientsWithGenderPagedSpec(1,10);
+        await Refresh();
+    }
 
-        logs = await Service.GetAll(spec);
+    protected async Task Refresh()
+    {
+        var spec = new ClientsWithGenderPagedSpec(page,pageCount);
+
+        clients = await Service.GetAll(spec);
+        var aux = await Service.Count(spec);
+
+        pageTotal = (int) Math.Ceiling((aux/(decimal)pageCount));
+    }
+
+    protected async Task PreviusPage()
+    {
+        page = page - 1;
+        if (page < 1) page = 1;
+
+        await Refresh();
+    }
+
+    protected async Task NextPage()
+    {
+        page = page + 1;
+        if (page > pageTotal) page = pageTotal;
+
+        await Refresh();
     }
 
 }
