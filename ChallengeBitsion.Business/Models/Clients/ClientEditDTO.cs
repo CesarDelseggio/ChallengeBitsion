@@ -15,8 +15,7 @@ namespace ChallengeBitsion.Business.Models.Clients
         [Required]
         public string Identification { get; set; }
 
-        [Required]
-        [Range(0, 200)]
+        [Range(1, 200)]
         public int Age { get; set; }
 
         [Required]

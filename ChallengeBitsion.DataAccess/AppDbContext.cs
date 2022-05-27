@@ -10,7 +10,10 @@ namespace ChallengeBitsion.DataAccess
         public AppDbContext(DbContextOptions<AppDbContext> options) 
             : base(options)
         {
-
+            if(options != null)
+            {
+                Database.EnsureCreated();
+            }
         }
 
         public DbSet<Log> Logs { get; set; }
@@ -25,6 +28,11 @@ namespace ChallengeBitsion.DataAccess
                 new Log() { Id = 1, Date = DateTime.Now, Title = "First Log", Message = "Data for test services" },
                 new Log() { Id = 2, Date = DateTime.Now, Title = "Second Log", Message = "This message is not valid" },
                 new Log() { Id = 3, Date = DateTime.Now, Title = "Third Log", Message = "Data access faild" });
+
+            modelBuilder.Entity<Gender>().HasData(
+                new Gender() { Id = 1, Name="Masculino" },
+                new Gender() { Id = 2, Name = "Femenino" }
+                );
         }
     }
 }

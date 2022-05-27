@@ -84,6 +84,8 @@
     {
         page = page + 1;
         if (page > pageTotal) page = pageTotal;
+        if (page < 1) page = 1;
+
 
         await Refresh();
     }
