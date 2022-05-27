@@ -19,8 +19,8 @@ namespace ChallengeBitsion.Business.Interfaces
         Task<int> Count();
         Task<int> Count(ISpecification<Log> spec);
 
-        void Insert(LogEditDTO entity);
-        void Update(LogEditDTO entity);
-        void Delete(int id);
+        Task Insert(LogEditDTO entity);
+        Task Update(LogEditDTO entity);
+        Task Delete(int id);
     }
 }

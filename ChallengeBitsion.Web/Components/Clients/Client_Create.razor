@@ -111,11 +111,11 @@
         genders = await servicesGender.GetAll();
     }
 
-    protected void Save()
+    protected async Task Save()
     {
         try
         {
-            services.Insert(client);
+            await services.Insert(client);
             navManager.NavigateTo("clients");
         }
         catch (Exception ex)

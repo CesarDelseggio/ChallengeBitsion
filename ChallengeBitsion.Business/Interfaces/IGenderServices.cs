@@ -19,8 +19,8 @@ namespace ChallengeBitsion.Business.Interfaces
         Task<int> Count();
         Task<int> Count(ISpecification<Gender> spec);
 
-        void Insert(GenderEditDTO entity);
-        void Update(GenderEditDTO entity);
-        void Delete(int id);
+        Task Insert(GenderEditDTO entity);
+        Task Update(GenderEditDTO entity);
+        Task Delete(int id);
     }
 }

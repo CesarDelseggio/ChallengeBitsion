@@ -8,6 +8,8 @@
 
 <h3>Editar Cliente</h3>
 
+@if(client != null)
+{
 <EditForm Model="client" OnValidSubmit="@Save">
     <DataAnnotationsValidator />
     <div class="form-group">
@@ -98,6 +100,11 @@
         <button @onclick="Cancel" class="btn btn-primary">Cancelar</button>
     </div>
 </EditForm>
+}else
+{
+    <h4 class="alert-warning">No se encontro el cliente</h4>
+    <button @onclick="Cancel" class="btn btn-primary">Atras</button>
+}
 
 @code {
     [Parameter]
@@ -118,11 +125,11 @@
         client = await services.Get(IdInt);
     }
 
-    protected void Save()
+    protected async Task Save()
     {
         try
         {
-            services.Update(client);
+            await services.Update(client);
             navManager.NavigateTo("clients");
         }
         catch (Exception ex)
